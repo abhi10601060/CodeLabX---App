@@ -3,11 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/ANDROID DEVELOPEMENT/CodeLabX/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1525" />
         <entry key="..\:/ANDROID DEVELOPEMENT/CodeLabX/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1525" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/CodeLabX/app/src/main/res/drawable/ic_logout_rounded_left.xml" value="0.1215" />
         <entry key="..\:/ANDROID DEVELOPEMENT/CodeLabX/app/src/main/res/drawable/languages_background.xml" value="0.1525" />
         <entry key="..\:/ANDROID DEVELOPEMENT/CodeLabX/app/src/main/res/drawable/run_icon_background.xml" value="0.1525" />
         <entry key="..\:/ANDROID DEVELOPEMENT/CodeLabX/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/CodeLabX/app/src/main/res/layout/languages_spinner_text.xml" value="0.25" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/CodeLabX/app/src/main/res/layout/navigation_view_header.xml" value="0.2" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/CodeLabX/app/src/main/res/mipmap-anydpi-v26/profile.xml" value="0.1215" />
         <entry key="..\:/ANDROID DEVELOPEMENT/CodeLabX/app/src/main/res/mipmap-anydpi-v26/run_icon.xml" value="0.1215" />
       </map>
     </option>

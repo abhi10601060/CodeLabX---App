@@ -75,9 +75,14 @@
             android:id="@+id/code_editor"
             />
 
-
-
-
     </RelativeLayout>
+
+
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/navigation_view_header"
+        android:background="@color/codelabx_theme"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
