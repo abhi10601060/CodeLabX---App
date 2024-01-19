@@ -49,8 +49,8 @@
                 android:background="@drawable/languages_background"
                 android:foregroundGravity="center"
                 android:spinnerMode="dropdown"
-                android:paddingStart="5dp"
-                android:paddingTop="3dp"
+                android:popupBackground="@drawable/languages_background"
+                android:paddingTop="2dp"
                 android:paddingBottom="5dp"
                 />
 
