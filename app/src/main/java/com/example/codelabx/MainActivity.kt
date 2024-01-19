@@ -3,12 +3,13 @@ package com.example.codelabx
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Spinner
-import android.widget.SpinnerAdapter
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var spinner : Spinner
+    lateinit var codeEditor : EditText
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun createView() {
         spinner = findViewById(R.id.languages_spinner)
+        codeEditor = findViewById(R.id.code_editor)
 
         setSpinner()
     }
