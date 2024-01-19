@@ -235,7 +235,15 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@color/white"/>
+                android:background="@color/white"
+                android:id="@+id/navigation_view_line"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/navigation_view_line"
+                android:padding="10dp"
+                android:id="@+id/files_recycler_view"/>
 
         </RelativeLayout>
 
