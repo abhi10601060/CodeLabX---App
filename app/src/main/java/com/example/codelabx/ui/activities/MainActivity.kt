@@ -35,10 +35,13 @@ import kotlin.math.log
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
 
+    lateinit var editor : EditText
+
     lateinit var spinner : Spinner
     lateinit var codeEditor : EditText
     lateinit var filesRV : RecyclerView
     lateinit var curDirName : TextView
+    lateinit var openedFileName : TextView
 
     lateinit var createFile : ImageView
     lateinit var createFolder : ImageView
@@ -153,10 +156,14 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
 
     /*                                  View Creation                                                                    */
     private fun createView() {
+
+        editor = findViewById(R.id.code_editor)
+
         spinner = findViewById(R.id.languages_spinner)
         codeEditor = findViewById(R.id.code_editor)
         filesRV = findViewById(R.id.files_recycler_view)
         curDirName = findViewById(R.id.cur_working_dir)
+        openedFileName = findViewById(R.id.opened_file_title)
 
         createFile = findViewById(R.id.create_file)
         createFolder = findViewById(R.id.create_folder)
@@ -238,7 +245,10 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
     }
 
     override fun fileClicked(file: File) {
-        TODO("Not yet implemented")
+        val data = viewModel.readFile(file)
+        openedFileName.text = file.name
+        editor.setText(data)
     }
+
 
 }

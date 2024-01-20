@@ -7,7 +7,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.File
+import java.lang.StringBuilder
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @HiltViewModel
 class MainViewModel @Inject constructor() : ViewModel(){
@@ -97,5 +100,20 @@ class MainViewModel @Inject constructor() : ViewModel(){
             val curDirectory = File(currDirPath)
             currDirPath = curDirectory.parent
         }
+    }
+
+    fun readFile(file : File) : String{
+        if (file.exists()){
+            var data : StringBuilder = StringBuilder()
+            val sc : Scanner = Scanner(file)
+
+            while (sc.hasNextLine()){
+                data.append(sc.nextLine())
+                data.append("\n")
+            }
+
+            return data.toString()
+        }
+        return "No Readable Data Found!!!"
     }
 }
