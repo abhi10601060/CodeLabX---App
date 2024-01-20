@@ -19,6 +19,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,6 +47,8 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
     lateinit var createFile : ImageView
     lateinit var createFolder : ImageView
     lateinit var backDirectory : ImageView
+    lateinit var nav : NavigationView
+    lateinit var drawer : DrawerLayout
 
     lateinit var viewModel: MainViewModel
     lateinit var filesAdapter: FilesAdapter
@@ -169,6 +172,9 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         createFolder = findViewById(R.id.create_folder)
         backDirectory = findViewById(R.id.back_btn)
 
+        nav = findViewById(R.id.files_nav)
+        drawer = findViewById(R.id.main_drawer)
+
         setSpinner()
     }
 
@@ -248,6 +254,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         val data = viewModel.readFile(file)
         openedFileName.text = file.name
         editor.setText(data)
+        drawer.closeDrawers()
     }
 
 

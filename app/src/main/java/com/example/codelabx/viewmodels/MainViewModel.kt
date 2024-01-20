@@ -20,6 +20,7 @@ class MainViewModel @Inject constructor() : ViewModel(){
 
     private val mainFilePath = Environment.getExternalStoragePublicDirectory("Download").toString() + "/myfile"
     private var currDirPath = mainFilePath
+    private var currOpenFile = ""
 
     private val filesLivedata = MutableLiveData<List<File>>()
     val files : LiveData<List<File>>
@@ -111,7 +112,7 @@ class MainViewModel @Inject constructor() : ViewModel(){
                 data.append(sc.nextLine())
                 data.append("\n")
             }
-
+            currOpenFile = file.path
             return data.toString()
         }
         return "No Readable Data Found!!!"

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.activities.MainActivity"
-    tools:openDrawer="start">
+    tools:openDrawer="start"
+    android:id="@+id/main_drawer">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -82,6 +83,7 @@
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:id="@+id/files_nav"
         android:background="@color/codelabx_theme"
         >
 
@@ -91,41 +93,40 @@
             android:id="@+id/navigation_parent">
 
             <RelativeLayout
+                android:id="@+id/navigation_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/navigation_header"
-                android:padding="10dp"
-                android:background="@color/toolbar_color">
+                android:background="@color/toolbar_color"
+                android:padding="10dp">
 
                 <ImageView
+                    android:id="@+id/profilePic"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:id="@+id/profilePic"
-                    android:src="@mipmap/profile_pic"
                     android:layout_centerHorizontal="true"
+                    android:src="@mipmap/profile_pic"
 
                     />
 
                 <TextView
+                    android:id="@+id/profile_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Abhi1060"
                     android:layout_below="@+id/profilePic"
-                    android:id="@+id/profile_name"
-                    android:textColor="@color/white"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10dp"
+                    android:text="Abhi1060"
+                    android:textColor="@color/white"
                     android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="10dp"/>
+                    android:textStyle="bold" />
 
                 <RelativeLayout
+                    android:id="@+id/logout_button"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/logout_button"
                     android:layout_below="@+id/profile_name"
-                    android:layout_marginTop="5dp"
                     android:layout_marginLeft="5dp"
-                    >
+                    android:layout_marginTop="5dp">
 
                     <ImageView
                         android:id="@+id/logout_image"
@@ -135,45 +136,44 @@
                         android:src="@mipmap/logout_btn" />
 
                     <TextView
+                        android:id="@+id/logout_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/logout_txt"
-                        android:text="Logout"
                         android:layout_below="@+id/logout_image"
+                        android:layout_centerHorizontal="true"
+                        android:text="Logout"
                         android:textColor="@color/white"
-                        android:textStyle="bold"
                         android:textSize="15sp"
-                        android:layout_centerHorizontal="true"/>
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/setting_button"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/setting_button"
-                    android:layout_marginTop="5dp"
                     android:layout_below="@id/profile_name"
-                    android:layout_marginRight="5dp"
                     android:layout_alignParentEnd="true"
-                    >
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp">
 
                     <ImageView
+                        android:id="@+id/setting_image"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:id="@+id/setting_image"
-                        android:src="@mipmap/settings_btn"
-                        android:layout_centerHorizontal="true"/>
+                        android:layout_centerHorizontal="true"
+                        android:src="@mipmap/settings_btn" />
 
                     <TextView
+                        android:id="@+id/settings_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/settings_txt"
-                        android:text="Setting"
                         android:layout_below="@+id/setting_image"
+                        android:layout_centerHorizontal="true"
+                        android:text="Setting"
                         android:textColor="@color/white"
-                        android:textStyle="bold"
                         android:textSize="15sp"
-                        android:layout_centerHorizontal="true"/>
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
