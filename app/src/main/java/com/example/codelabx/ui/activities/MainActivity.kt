@@ -6,16 +6,16 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.codelabx.R
+import com.example.codelabx.adapters.FilesAdapter
 import com.example.codelabx.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
@@ -26,8 +26,11 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var spinner : Spinner
     lateinit var codeEditor : EditText
+    lateinit var filesRV : RecyclerView
+    lateinit var curDirName : TextView
 
     lateinit var viewModel: MainViewModel
+    lateinit var filesAdapter: FilesAdapter
     private  val TAG = "ABHI"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,16 +38,29 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         createView()
+        checkStoragePermission()
         createViewModel()
+        setupFiles()
+
+
+
+    }
+
+    private fun setupFiles() {
+        curDirName.text = viewModel.getCurDirectoryName()
 
         viewModel.getAllFilesFromCurDirectory()
         Log.d(TAG, "onCreate: ${viewModel.getCurDirectoryName()}")
         viewModel.files.observe(this , Observer {
-            Log.d("ABHI", "onCreate: ${it.get(0).extension}")
-            Log.d("ABHI", "onCreate: ${it.get(1).extension}")
+
+            filesAdapter = FilesAdapter()
+            filesAdapter.submitList(it)
+            filesRV.adapter = filesAdapter
+            filesRV.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL , false)
+
         })
-        checkStoragePermission()
     }
+
     private fun checkStoragePermission(){
        if (ContextCompat.checkSelfPermission(this , Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
            ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
@@ -91,6 +107,8 @@ class MainActivity : AppCompatActivity() {
     private fun createView() {
         spinner = findViewById(R.id.languages_spinner)
         codeEditor = findViewById(R.id.code_editor)
+        filesRV = findViewById(R.id.files_recycler_view)
+        curDirName = findViewById(R.id.cur_working_dir)
 
         setSpinner()
     }
