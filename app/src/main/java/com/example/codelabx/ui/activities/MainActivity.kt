@@ -2,11 +2,17 @@ package com.example.codelabx.ui.activities
 
 import android.Manifest
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.provider.Settings
 import android.util.Log
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -14,6 +20,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.codelabx.BuildConfig
 import com.example.codelabx.R
 import com.example.codelabx.adapters.FilesAdapter
 import com.example.codelabx.viewmodels.MainViewModel
@@ -33,6 +40,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var filesAdapter: FilesAdapter
     private  val TAG = "ABHI"
 
+    @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -41,8 +49,6 @@ class MainActivity : AppCompatActivity() {
         checkStoragePermission()
         createViewModel()
         setupFiles()
-
-
 
     }
 
@@ -61,10 +67,50 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    private fun createViewModel() {
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+    }
+
+    /*                                  View Creation                                                                    */
+    private fun createView() {
+        spinner = findViewById(R.id.languages_spinner)
+        codeEditor = findViewById(R.id.code_editor)
+        filesRV = findViewById(R.id.files_recycler_view)
+        curDirName = findViewById(R.id.cur_working_dir)
+
+        setSpinner()
+    }
+
+    private fun setSpinner() {
+        val adapter = ArrayAdapter.createFromResource(this, R.array.languages, android.R.layout.simple_spinner_item)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+    }
+
+    /*                                  Permission Handling                                                                   */
+    private fun askAllMediaPermission() {
+        val uri = Uri.parse("package:${BuildConfig.APPLICATION_ID}")
+        val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, uri)
+        startActivityForResult(intent , 500)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == 500){
+            Toast.makeText(this, "All media permission granted..", Toast.LENGTH_SHORT).show()
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
     private fun checkStoragePermission(){
        if (ContextCompat.checkSelfPermission(this , Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
            ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
            askStoragePermissions()
+       }
+        else{
+            if (!Environment.isExternalStorageManager()){
+                askAllMediaPermission()
+            }
        }
     }
 
@@ -84,6 +130,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.R)
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -92,6 +139,7 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == 200){
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED){
                 Toast.makeText(this, "Permission Granted...", Toast.LENGTH_SHORT).show()
+                checkStoragePermission()
             }
             else{
                 Toast.makeText(this, "Permission Denied!!!", Toast.LENGTH_SHORT).show()
@@ -100,22 +148,4 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-    private fun createViewModel() {
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-    }
-
-    private fun createView() {
-        spinner = findViewById(R.id.languages_spinner)
-        codeEditor = findViewById(R.id.code_editor)
-        filesRV = findViewById(R.id.files_recycler_view)
-        curDirName = findViewById(R.id.cur_working_dir)
-
-        setSpinner()
-    }
-
-    private fun setSpinner() {
-        val adapter = ArrayAdapter.createFromResource(this, R.array.languages, android.R.layout.simple_spinner_item)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = adapter
-    }
 }

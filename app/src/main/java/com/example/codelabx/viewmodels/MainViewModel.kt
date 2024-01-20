@@ -7,8 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.File
-import java.io.FilenameFilter
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,14 +23,42 @@ class MainViewModel @Inject constructor() : ViewModel(){
 
     fun getAllFilesFromCurDirectory(){
         val currFile = File(currFilePath)
-        val fileList =  currFile.listFiles()
+        val fileList = getAllCodeLabFilesFolders(currFile)
 
         if (fileList != null) {
-            filesLivedata.postValue(fileList.asList())
+            filesLivedata.postValue(fileList)
         }
         else{
             Log.d("ABHI", "getAllFilesFromCurDirectory: file list is null")
         }
+    }
+
+    private fun getAllCodeLabFilesFolders(curDir : File) : List<File>{
+
+        curDir.walk().forEach {
+            Log.d("ABHI", "getAllCodeLabFilesFolders: ${it.name}")
+        }
+
+        val fileList = curDir.listFiles()
+        val names  = curDir.list()
+        Log.d("ABHI", "getAllCodeLabFilesFolders: name ${names.size}")
+        Log.d("ABHI", "getAllCodeLabFilesFolders: len ${fileList.size}")
+        val codeLabFiles : MutableList<File> = ArrayList<File>()
+        val files : MutableList<File> = ArrayList<File>()
+        for (file in fileList){
+            Log.d("ABHI", "getAllCodeLabFilesFolders: ${file.extension}")
+            if (file.isDirectory){
+                codeLabFiles.add(file)
+                continue
+            }
+            if (file.extension=="py"|| file.extension.equals("java") || file.extension.equals("cpp")){
+                files.add(file)
+            }
+        }
+        Log.d("ABHI", "getAllCodeLabFilesFolders: ${files.toString()}")
+        codeLabFiles.addAll(files)
+
+        return codeLabFiles
     }
 
     fun getCurDirectoryName() : String{
