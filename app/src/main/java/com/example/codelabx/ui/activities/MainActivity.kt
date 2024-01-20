@@ -39,7 +39,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var codeEditor : EditText
     lateinit var filesRV : RecyclerView
     lateinit var curDirName : TextView
+
     lateinit var createFile : ImageView
+    lateinit var createFolder : ImageView
 
     lateinit var viewModel: MainViewModel
     lateinit var filesAdapter: FilesAdapter
@@ -60,6 +62,9 @@ class MainActivity : AppCompatActivity() {
             showCreateFileDialog()
         })
 
+        createFolder.setOnClickListener(View.OnClickListener {
+            showCreateFolderDialog()
+        })
     }
 
     private fun setupFiles() {
@@ -75,6 +80,33 @@ class MainActivity : AppCompatActivity() {
             filesRV.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL , false)
 
         })
+    }
+    fun showCreateFolderDialog(){
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.create_folder_dialog)
+
+
+        val nameEdt = dialog.findViewById<EditText>(R.id.folder_name_edt)
+
+        val cancel = dialog.findViewById<Button>(R.id.btn_cancel_folder_dialog)
+        cancel.setOnClickListener(View.OnClickListener {
+            dialog.dismiss()
+        })
+
+        val create = dialog.findViewById<Button>(R.id.btn_create_folder_dialog)
+        create.setOnClickListener(View.OnClickListener {
+            val folderName = nameEdt.text.toString()
+            createCodeLabXFolder(folderName)
+            dialog.dismiss()
+        })
+
+        dialog.show()
+    }
+
+    fun createCodeLabXFolder(folderName : String){
+        viewModel.createCodeLabXFolder(folderName)
     }
 
     fun showCreateFileDialog(){
@@ -121,6 +153,7 @@ class MainActivity : AppCompatActivity() {
         curDirName = findViewById(R.id.cur_working_dir)
 
         createFile = findViewById(R.id.create_file)
+        createFolder = findViewById(R.id.create_folder)
 
         setSpinner()
     }

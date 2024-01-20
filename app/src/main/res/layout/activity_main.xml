@@ -217,12 +217,12 @@
                     android:src="@mipmap/add_file" />
 
                 <ImageView
+                    android:id="@+id/create_folder"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:src="@mipmap/add_folder"
-                    android:layout_toLeftOf="@+id/create_file"
                     android:layout_marginRight="5dp"
-                    android:id="@+id/create_folder"/>
+                    android:layout_toLeftOf="@+id/create_file"
+                    android:src="@mipmap/add_folder" />
 
 
             </RelativeLayout>

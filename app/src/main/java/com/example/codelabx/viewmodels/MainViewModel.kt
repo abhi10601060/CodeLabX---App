@@ -80,4 +80,11 @@ class MainViewModel @Inject constructor() : ViewModel(){
         newFile.createNewFile()
         getAllFilesFromCurDirectory()
     }
+
+    fun createCodeLabXFolder(folderName : String){
+        val folderPath = currDirPath + "/" + folderName
+        val folder = File(folderPath)
+        folder.mkdir()
+        getAllFilesFromCurDirectory()
+    }
 }

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/toolbar_color">
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/codelabx_theme"
+            android:id="@+id/header_new_folder"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Folder"
+                android:layout_centerInParent="true"
+                android:layout_margin="5dp"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/folder_name_edt"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_below="@id/header_new_folder"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/editor_color"
+            android:hint="Enter folder name..."
+            android:paddingStart="5dp"
+            android:textColorHint="@color/white"
+            android:textSize="15sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="create"
+            android:layout_below="@id/folder_name_edt"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:id="@+id/btn_create_folder_dialog"
+            android:layout_marginTop="15dp"
+            android:backgroundTint="@color/btn_color"/>
+
+        <Button
+            android:id="@+id/btn_cancel_folder_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/folder_name_edt"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="18dp"
+            android:text="cancel"
+            android:backgroundTint="@color/btn_color"/>
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>
