@@ -18,6 +18,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.codelabx.R
 import com.example.codelabx.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
+import kotlin.math.log
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -26,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var codeEditor : EditText
 
     lateinit var viewModel: MainViewModel
-
+    private  val TAG = "ABHI"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +37,12 @@ class MainActivity : AppCompatActivity() {
         createView()
         createViewModel()
 
+        viewModel.getAllFilesFromCurDirectory()
+        Log.d(TAG, "onCreate: ${viewModel.getCurDirectoryName()}")
+        viewModel.files.observe(this , Observer {
+            Log.d("ABHI", "onCreate: ${it.get(0).extension}")
+            Log.d("ABHI", "onCreate: ${it.get(1).extension}")
+        })
         checkStoragePermission()
     }
     private fun checkStoragePermission(){
