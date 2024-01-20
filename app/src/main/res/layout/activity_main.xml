@@ -210,11 +210,11 @@
                     android:id="@+id/cur_working_dir"/>
 
                 <ImageView
+                    android:id="@+id/create_file"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:src="@mipmap/add_file"
                     android:layout_alignParentEnd="true"
-                    android:id="@+id/create_file"/>
+                    android:src="@mipmap/add_file" />
 
                 <ImageView
                     android:layout_width="35dp"

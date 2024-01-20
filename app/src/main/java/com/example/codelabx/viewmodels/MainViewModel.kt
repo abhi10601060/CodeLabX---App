@@ -12,17 +12,18 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor() : ViewModel(){
 
+
     /* File Handling */
 
     private val mainFilePath = Environment.getExternalStoragePublicDirectory("Download").toString() + "/myfile"
-    private var currFilePath = mainFilePath
+    private var currDirPath = mainFilePath
 
     private val filesLivedata = MutableLiveData<List<File>>()
     val files : LiveData<List<File>>
     get() = filesLivedata
 
     fun getAllFilesFromCurDirectory(){
-        val currFile = File(currFilePath)
+        val currFile = File(currDirPath)
         val fileList = getAllCodeLabFilesFolders(currFile)
 
         if (fileList != null) {
@@ -62,7 +63,21 @@ class MainViewModel @Inject constructor() : ViewModel(){
     }
 
     fun getCurDirectoryName() : String{
-        val curDir = File(currFilePath)
+        val curDir = File(currDirPath)
         return curDir.name
+    }
+
+    fun createCodeLabXFile(fileName : String , type : String){
+        var extension = ".txt"
+        when(type){
+            "python" -> extension = ".py"
+            "java" -> extension =".java"
+            "cpp" -> extension=".cpp"
+        }
+        val filePath = currDirPath + "/" + fileName + extension
+
+        val newFile = File(filePath)
+        newFile.createNewFile()
+        getAllFilesFromCurDirectory()
     }
 }

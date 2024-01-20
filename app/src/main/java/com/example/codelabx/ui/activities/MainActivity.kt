@@ -1,6 +1,7 @@
 package com.example.codelabx.ui.activities
 
 import android.Manifest
+import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,6 +12,8 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.Settings
 import android.util.Log
+import android.view.View
+import android.view.Window
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -24,6 +27,7 @@ import com.example.codelabx.BuildConfig
 import com.example.codelabx.R
 import com.example.codelabx.adapters.FilesAdapter
 import com.example.codelabx.viewmodels.MainViewModel
+import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import kotlin.math.log
@@ -35,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var codeEditor : EditText
     lateinit var filesRV : RecyclerView
     lateinit var curDirName : TextView
+    lateinit var createFile : ImageView
 
     lateinit var viewModel: MainViewModel
     lateinit var filesAdapter: FilesAdapter
@@ -49,6 +54,11 @@ class MainActivity : AppCompatActivity() {
         checkStoragePermission()
         createViewModel()
         setupFiles()
+
+        createFile.setOnClickListener(View.OnClickListener {
+            Log.d(TAG, "onCreate: clicked")
+            showCreateFileDialog()
+        })
 
     }
 
@@ -67,6 +77,38 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    fun showCreateFileDialog(){
+        val dialog  = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.create_file_dialogue)
+
+        val nameEdt = dialog.findViewById<EditText>(R.id.file_name_edt)
+
+        val dialogSpinner = dialog.findViewById<Spinner>(R.id.languages_spinner_dialogue)
+        val adapter = ArrayAdapter.createFromResource(this, R.array.languages, android.R.layout.simple_spinner_item)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        dialogSpinner.adapter = adapter
+
+        val cancel = dialog.findViewById<Button>(R.id.btn_cancel_dialog)
+        cancel.setOnClickListener(View.OnClickListener {
+            dialog.dismiss()
+        })
+
+        val create = dialog.findViewById<Button>(R.id.btn_create_dialog)
+        create.setOnClickListener(View.OnClickListener {
+            val fileName = nameEdt.text.toString()
+            val type = dialogSpinner.selectedItem.toString()
+            createCodeLabXFile(fileName , type);
+            dialog.dismiss()
+        })
+        dialog.show()
+    }
+
+    private fun createCodeLabXFile(name:String , type : String) {
+        viewModel.createCodeLabXFile(name,type)
+    }
+
     private fun createViewModel() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
     }
@@ -77,6 +119,8 @@ class MainActivity : AppCompatActivity() {
         codeEditor = findViewById(R.id.code_editor)
         filesRV = findViewById(R.id.files_recycler_view)
         curDirName = findViewById(R.id.cur_working_dir)
+
+        createFile = findViewById(R.id.create_file)
 
         setSpinner()
     }

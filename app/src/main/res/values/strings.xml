@@ -2,8 +2,8 @@
     <string name="app_name">CodeLabX</string>
 
     <string-array name="languages">
-        <item>Python</item>
-        <item>Java</item>
-        <item>Cpp</item>
+        <item>python</item>
+        <item>java</item>
+        <item>cpp</item>
     </string-array>
 </resources>
