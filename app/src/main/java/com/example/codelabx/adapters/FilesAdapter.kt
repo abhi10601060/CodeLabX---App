@@ -18,7 +18,21 @@ class FilesAdapter : ListAdapter<File, FilesAdapter.MyViewHolder >(DiffUtil()) {
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.fileName.text = getItem(position).name
+        val item = getItem(position)
+        holder.fileName.text = item.name
+
+        if (item.isDirectory){
+            holder.fileImage.setImageResource(R.mipmap.folder)
+        }
+        else{
+            when(item.extension){
+                "py" -> holder.fileImage.setImageResource(R.mipmap.python)
+                "java" -> holder.fileImage.setImageResource(R.mipmap.java)
+                "cpp" -> holder.fileImage.setImageResource(R.mipmap.cpp)
+            }
+        }
+
+
     }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
