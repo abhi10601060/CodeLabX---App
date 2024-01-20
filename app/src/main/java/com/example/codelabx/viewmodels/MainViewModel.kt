@@ -87,4 +87,15 @@ class MainViewModel @Inject constructor() : ViewModel(){
         folder.mkdir()
         getAllFilesFromCurDirectory()
     }
+
+    fun openFolder(name : String){
+        currDirPath = currDirPath + "/" + name
+    }
+
+    fun back(){
+        if (currDirPath != mainFilePath){
+            val curDirectory = File(currDirPath)
+            currDirPath = curDirectory.parent
+        }
+    }
 }

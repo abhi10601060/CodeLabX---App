@@ -33,7 +33,7 @@ import java.io.File
 import kotlin.math.log
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
 
     lateinit var spinner : Spinner
     lateinit var codeEditor : EditText
@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var createFile : ImageView
     lateinit var createFolder : ImageView
+    lateinit var backDirectory : ImageView
 
     lateinit var viewModel: MainViewModel
     lateinit var filesAdapter: FilesAdapter
@@ -65,6 +66,11 @@ class MainActivity : AppCompatActivity() {
         createFolder.setOnClickListener(View.OnClickListener {
             showCreateFolderDialog()
         })
+
+        backDirectory.setOnClickListener(View.OnClickListener {
+            viewModel.back()
+            setupFiles()
+        })
     }
 
     private fun setupFiles() {
@@ -74,7 +80,7 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "onCreate: ${viewModel.getCurDirectoryName()}")
         viewModel.files.observe(this , Observer {
 
-            filesAdapter = FilesAdapter()
+            filesAdapter = FilesAdapter(this)
             filesAdapter.submitList(it)
             filesRV.adapter = filesAdapter
             filesRV.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL , false)
@@ -154,6 +160,7 @@ class MainActivity : AppCompatActivity() {
 
         createFile = findViewById(R.id.create_file)
         createFolder = findViewById(R.id.create_folder)
+        backDirectory = findViewById(R.id.back_btn)
 
         setSpinner()
     }
@@ -223,6 +230,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    override fun folderClicked(folder: File) {
+        viewModel.openFolder(folder.name)
+        setupFiles()
+    }
+
+    override fun fileClicked(file: File) {
+        TODO("Not yet implemented")
     }
 
 }
