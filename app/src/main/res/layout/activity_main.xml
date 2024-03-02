@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.activities.MainActivity"
-    android:id="@+id/main_drawer">
+    android:id="@+id/main_drawer"
+    tools:openDrawer="right">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -237,11 +238,11 @@
                 android:id="@+id/navigation_view_line"/>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/files_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/navigation_view_line"
-                android:padding="10dp"
-                android:id="@+id/files_recycler_view"/>
+                android:padding="10dp" />
 
         </RelativeLayout>
 
@@ -253,7 +254,23 @@
         android:layout_width="380dp"
         android:layout_height="match_parent"
         android:layout_gravity="right"
-        android:id="@+id/stdout_drawer"/>
+        android:id="@+id/stdout_drawer">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:id="@+id/stdout_toolbar"
+                android:background="@drawable/stdout_toolbar_bg">
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </com.google.android.material.navigation.NavigationView>
 
 
 
