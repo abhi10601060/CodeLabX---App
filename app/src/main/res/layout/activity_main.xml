@@ -266,6 +266,30 @@
                 android:id="@+id/stdout_toolbar"
                 android:background="@drawable/stdout_toolbar_bg">
 
+                <View
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:background="@drawable/red_dot"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:id="@+id/stdout_red_dot"/>
+                <View
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:background="@drawable/yellow_dot"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/stdout_red_dot"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/stdout_yellow_dot"/>
+                <View
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:background="@drawable/green_dot"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/stdout_yellow_dot"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/stdout_green_dot"/>
+
             </RelativeLayout>
 
         </RelativeLayout>
