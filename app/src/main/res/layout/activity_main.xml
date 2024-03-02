@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.activities.MainActivity"
-    tools:openDrawer="start"
     android:id="@+id/main_drawer">
 
     <RelativeLayout
@@ -30,17 +29,18 @@
                 android:id="@+id/logo"
                 />
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
                 android:id="@+id/opened_file_title"
+                android:layout_toLeftOf="@id/languages_spinner"
                 android:text="Hello.py"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/logo"
                 android:layout_centerVertical="true"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:ellipsize="end"/>
             <Spinner
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
@@ -248,5 +248,13 @@
 
 
     </com.google.android.material.navigation.NavigationView>
+
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="380dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:id="@+id/stdout_drawer"/>
+
+
 
 </androidx.drawerlayout.widget.DrawerLayout>
