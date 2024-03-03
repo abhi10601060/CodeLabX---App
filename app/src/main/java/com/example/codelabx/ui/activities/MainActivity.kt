@@ -12,10 +12,10 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.Settings
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.view.Window
 import android.widget.*
-import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -33,11 +33,8 @@ import com.example.codelabx.repos.MainRepo
 import com.example.codelabx.viewmodels.MainViewModel
 import com.example.codelabx.viewmodels.MainViewModelFactory
 import com.google.android.material.navigation.NavigationView
-import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.WebSocket
+import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
-import javax.inject.Inject
-import kotlin.math.log
 
 class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
 
@@ -52,8 +49,10 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
     lateinit var createFile : ImageView
     lateinit var createFolder : ImageView
     lateinit var backDirectory : ImageView
-    lateinit var nav : NavigationView
+    lateinit var filesNav : NavigationView
+    lateinit var stdoutNav : NavigationView
     lateinit var drawer : DrawerLayout
+    lateinit var stdout : TextView
 
     lateinit var viewModel: MainViewModel
     lateinit var filesAdapter: FilesAdapter
@@ -67,8 +66,8 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         createView()
         checkStoragePermission()
         createViewModel()
+        observeStdout()
         setupFiles()
-        sendMessage()
 
         createFile.setOnClickListener(View.OnClickListener {
             Log.d(TAG, "onCreate: clicked")
@@ -85,8 +84,15 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         })
     }
 
-    private fun sendMessage() {
-        viewModel
+    private fun observeStdout(){
+        viewModel.stdout.observe(this , Observer {
+            Log.d("WEBSOCKET", "observeStdout: " +  it)
+            if (it != null){
+                drawer.closeDrawer(filesNav)
+                drawer.openDrawer(Gravity.RIGHT)
+                stdout.text = it
+            }
+        })
     }
 
     private fun setupFiles() {
@@ -184,8 +190,10 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         createFolder = findViewById(R.id.create_folder)
         backDirectory = findViewById(R.id.back_btn)
 
-        nav = findViewById(R.id.files_nav)
+        filesNav = findViewById(R.id.files_nav)
         drawer = findViewById(R.id.main_drawer)
+        stdoutNav = findViewById(R.id.stdout_drawer)
+        stdout = findViewById(R.id.stdout_textview)
 
         setSpinner()
     }

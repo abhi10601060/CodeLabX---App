@@ -6,6 +6,6 @@ import com.example.codelabx.repos.MainRepo
 
 class MainViewModelFactory(private val repo : MainRepo) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return MainViewModel(MainRepo()) as T
+        return MainViewModel(repo) as T
     }
 }

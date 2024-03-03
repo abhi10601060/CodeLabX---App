@@ -21,7 +21,8 @@ import kotlin.collections.ArrayList
 class MainViewModel constructor(private val repo : MainRepo) : ViewModel(){
 
     /* WebSocket Handling */
-
+    val stdout : LiveData<String>
+    get() = repo.stdout
 
     /* File Handling */
 
