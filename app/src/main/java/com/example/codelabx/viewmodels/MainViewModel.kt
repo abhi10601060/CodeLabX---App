@@ -5,15 +5,22 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.codelabx.repos.MainRepo
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import okhttp3.WebSocket
 import java.io.File
 import java.lang.StringBuilder
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
-@HiltViewModel
-class MainViewModel @Inject constructor() : ViewModel(){
+
+class MainViewModel constructor(private val repo : MainRepo) : ViewModel(){
+
+    /* WebSocket Handling */
 
 
     /* File Handling */

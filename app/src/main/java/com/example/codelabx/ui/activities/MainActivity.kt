@@ -15,6 +15,7 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.*
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -27,13 +28,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.codelabx.BuildConfig
 import com.example.codelabx.R
 import com.example.codelabx.adapters.FilesAdapter
+import com.example.codelabx.network.WebSocketClient
+import com.example.codelabx.repos.MainRepo
 import com.example.codelabx.viewmodels.MainViewModel
+import com.example.codelabx.viewmodels.MainViewModelFactory
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.WebSocket
 import java.io.File
+import javax.inject.Inject
 import kotlin.math.log
 
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
 
     lateinit var editor : EditText
@@ -63,6 +68,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         checkStoragePermission()
         createViewModel()
         setupFiles()
+        sendMessage()
 
         createFile.setOnClickListener(View.OnClickListener {
             Log.d(TAG, "onCreate: clicked")
@@ -77,6 +83,10 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
             viewModel.back()
             setupFiles()
         })
+    }
+
+    private fun sendMessage() {
+        viewModel
     }
 
     private fun setupFiles() {
@@ -154,7 +164,9 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
     }
 
     private fun createViewModel() {
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        val repo = MainRepo()
+        repo.setWebSocket(WebSocketClient.getWebSocketConn(repo))
+        viewModel = ViewModelProvider(this , MainViewModelFactory(repo)).get(MainViewModel::class.java)
     }
 
     /*                                  View Creation                                                                    */
