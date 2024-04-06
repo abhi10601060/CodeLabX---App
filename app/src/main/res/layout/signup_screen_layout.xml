@@ -1,6 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/toolbar_color">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/signup_logo_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="30dp">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/signup_logo"
+            android:background="@color/codelabx_theme"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CODELABX"
+            android:textSize="40sp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/signup_logo_text"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/signup_text_parent"
+        android:layout_below="@id/signup_logo_parent"
+        android:layout_marginTop="50dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="30dp"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/signup_text"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/signup_text"
+            android:text="Create your account for free"
+            android:layout_marginLeft="20dp"
+            android:textStyle="bold"
+            android:layout_marginTop="7dp"
+            android:textSize="20sp"
+            android:textColor="@color/btn_color"
+            android:id="@+id/text_lets"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/login_component_parent"
+        android:layout_below="@id/signup_text_parent"
+        android:layout_marginTop="25dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:id="@+id/signup_text_email"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_below="@id/signup_text_email"
+            android:layout_marginTop="8dp"
+            android:paddingStart="10dp"
+            android:maxLines="1"
+            android:hint="Enter email here..."
+            android:textColorHint="@color/btn_color"
+            android:background="@drawable/custom_edittext_background"
+            android:id="@+id/signup_email_edt"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:textSize="20dp"
+            android:id="@+id/signup_password"
+            android:layout_below="@id/signup_email_edt"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_below="@id/signup_password"
+            android:layout_marginTop="8dp"
+            android:paddingStart="10dp"
+            android:maxLines="1"
+            android:hint="Enter your password..."
+            android:inputType="textVisiblePassword"
+            android:textColorHint="@color/btn_color"
+            android:background="@drawable/custom_edittext_background"
+            android:id="@+id/signup_pass_edt"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confirm Password"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:textSize="20dp"
+            android:id="@+id/signup_confirm_password"
+            android:layout_below="@id/signup_pass_edt"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_below="@id/signup_confirm_password"
+            android:layout_marginTop="8dp"
+            android:paddingStart="10dp"
+            android:maxLines="1"
+            android:hint="Enter password again..."
+            android:inputType="textPassword"
+            android:textColorHint="@color/btn_color"
+            android:background="@drawable/custom_edittext_background"
+            android:id="@+id/signup_confirm_pass_edt"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:layout_below="@id/signup_confirm_pass_edt"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:id="@+id/signup_btn"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
