@@ -22,4 +22,11 @@ class AuthViewModel(private val authRepo: AuthRepo)  : ViewModel(){
     fun login(userDetails: UserDetails){
         CoroutineScope(Dispatchers.IO).launch { authRepo.login(userDetails) }
     }
+
+    fun saveUser(userName : String){
+        authRepo.saveUser(userName)
+    }
+    fun isUserLoggedIn():Boolean{
+        return authRepo.isUserLoggedIn()
+    }
 }

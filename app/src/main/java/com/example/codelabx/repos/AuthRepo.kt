@@ -32,9 +32,17 @@ class AuthRepo(private val authService: AuthService , private val sharedPreferen
                     val token = response.body()!!.token
                     val editor = sharedPreferences.edit()
                     editor.putString("token" , token)
+                    editor.apply()
                     return Resource.Success<AuthResponse>(response.body())
                 }
         }
         return  Resource.Error<AuthResponse>(response.message())
+    }
+    fun saveUser(userName : String){
+        sharedPreferences.edit().putString("user", userName).apply()
+    }
+    fun isUserLoggedIn() : Boolean{
+        var userName: String? = sharedPreferences.getString("user" , null) ?: return false
+        return true
     }
 }

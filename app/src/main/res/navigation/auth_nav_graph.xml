@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/signuoScreen"
-        android:name="com.example.codelabx.ui.fragments.SignuoScreen"
+        android:name="com.example.codelabx.ui.fragments.SignupScreen"
         android:label="SignuoScreen" >
         <action
             android:id="@+id/action_signuoScreen_to_loginScreen"

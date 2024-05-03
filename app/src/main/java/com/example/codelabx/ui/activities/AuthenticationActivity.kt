@@ -20,7 +20,7 @@ class AuthenticationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authentication)
 
-        val authRepo = AuthRepo(RetroInstance.getInstance().create(AuthService::class.java), SharedPref.getInstance(this))
+        val authRepo = AuthRepo(RetroInstance.getInstance().create(AuthService::class.java), SharedPref.getAuthDbInstance(this))
         viewModel = ViewModelProvider(this , AuthViewModelFactory(authRepo)).get(AuthViewModel::class.java)
     }
 }

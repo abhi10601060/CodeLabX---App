@@ -153,4 +153,11 @@
 
     </RelativeLayout>
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:id="@+id/signup_progress_bar"
+        android:visibility="gone"/>
+
 </RelativeLayout>
