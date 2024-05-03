@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/auth_nav_graph"
+    app:startDestination="@id/startFlashScreen">
+
+    <fragment
+        android:id="@+id/startFlashScreen"
+        android:name="com.example.codelabx.ui.fragments.StartFlashScreen"
+        android:label="StartFlashScreen" >
+        <action
+            android:id="@+id/action_startFlashScreen_to_loginScreen"
+            app:popUpTo="@id/startFlashScreen"
+            app:popUpToInclusive="true"
+            app:destination="@id/loginScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginScreen"
+        android:name="com.example.codelabx.ui.fragments.LoginScreen"
+        android:label="LoginScreen" >
+        <action
+            android:id="@+id/action_loginScreen_to_signuoScreen"
+            app:destination="@id/signuoScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/signuoScreen"
+        android:name="com.example.codelabx.ui.fragments.SignuoScreen"
+        android:label="SignuoScreen" >
+        <action
+            android:id="@+id/action_signuoScreen_to_loginScreen"
+            app:destination="@id/loginScreen" />
+    </fragment>
+</navigation>
