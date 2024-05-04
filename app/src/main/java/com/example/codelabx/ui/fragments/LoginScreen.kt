@@ -35,7 +35,6 @@ class LoginScreen : Fragment(R.layout.login_screen_layout) {
 
         viewModel= (activity as AuthenticationActivity).viewModel
 
-        if (viewModel.isUserLoggedIn()) openMainActivity()
         createView(view)
         setOnClickListeners()
         observeAuthResponse()

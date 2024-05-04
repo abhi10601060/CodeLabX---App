@@ -68,7 +68,10 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         createViewModel()
         observeStdout()
         setupFiles()
+        setOnclicks()
+    }
 
+    private fun setOnclicks() {
         createFile.setOnClickListener(View.OnClickListener {
             Log.d(TAG, "onCreate: clicked")
             showCreateFileDialog()

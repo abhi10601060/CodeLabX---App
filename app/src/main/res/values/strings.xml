@@ -4,6 +4,6 @@
     <string-array name="languages">
         <item>python</item>
         <item>java</item>
-        <item>cpp</item>
+<!--        <item>cpp</item>-->
     </string-array>
 </resources>
