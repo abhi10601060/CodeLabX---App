@@ -91,8 +91,8 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         })
 
         runBtn.setOnClickListener(View.OnClickListener {
-            viewModel.setWebSocketConn()
             val userEvent = createUserEvent()
+            viewModel.writeMessageToConn(userEvent)
             // TODO: Pass userEvent to the websocket connection and save text to file
         })
     }
@@ -130,7 +130,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         AlertDialog.Builder(this)
             .setCancelable(false)
             .setPositiveButton("Retry", DialogInterface.OnClickListener { dialogInterface, i ->
-                viewModel.setWebSocketConn()
+                viewModel.writeMessageToConn(createUserEvent())
                 dialogInterface.dismiss()
             })
             .setNegativeButton("cancel" , DialogInterface.OnClickListener { dialogInterface, i ->  dialogInterface.dismiss()})

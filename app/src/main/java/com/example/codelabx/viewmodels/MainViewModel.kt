@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.codelabx.models.UserEvent
 import com.example.codelabx.repos.MainRepo
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -12,6 +14,7 @@ import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import okhttp3.WebSocket
 import java.io.File
@@ -32,6 +35,10 @@ class MainViewModel constructor(private val repo : MainRepo) : ViewModel(){
 
     fun setWebSocketConn(){
         repo.setWebSocketConn()
+    }
+
+    fun writeMessageToConn(userEvent: UserEvent){
+        repo.writeMessageToConn(userEvent)
     }
 
     /* File Handling */

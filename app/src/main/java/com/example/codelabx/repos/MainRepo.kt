@@ -3,7 +3,9 @@ package com.example.codelabx.repos
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.codelabx.models.UserEvent
 import com.example.codelabx.network.WebSocketClient
+import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,6 +38,15 @@ object MainRepo  : WebSocketListener() {
         if (webSocket == null) return
         webSocket!!.close(1000 , "Closed Manually")
         webSocket = null
+    }
+
+    fun writeMessageToConn(userEvent: UserEvent){
+        val gson = Gson()
+        val res = webSocket?.send(gson.toJson(userEvent))
+        if (res==null || !res) {
+            setWebSocketConn()
+            writeMessageToConn(userEvent)
+        }
     }
 
     override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
