@@ -69,10 +69,11 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         createView()
         checkStoragePermission()
         createViewModel()
-        observeStdout()
-        observeConnFailure()
         setupFiles()
         setOnclicks()
+        observeStdout()
+        observeConnFailure()
+
     }
     private fun setOnclicks() {
         createFile.setOnClickListener(View.OnClickListener {
@@ -320,6 +321,10 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         openedFileName.text = file.name
         editor.setText(data)
         drawer.closeDrawers()
+    }
+
+    override fun fileDeleteClicked(file: File) {
+        viewModel.deleteFile(file)
     }
 
 

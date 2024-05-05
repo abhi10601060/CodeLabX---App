@@ -161,4 +161,15 @@ class MainViewModel constructor(private val repo : MainRepo) : ViewModel(){
             }
         }
     }
+
+    fun deleteFile(file : File){
+        try{
+            file.delete()
+            getAllFilesFromCurDirectory()
+            getAllCodeLabFilesFolders(file.parentFile)
+        }
+        catch (ex : Exception){
+            Log.d("ABHI", "deleteFile: can't delete file")
+        }
+    }
 }
