@@ -33,28 +33,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/opened_file_title"
-                android:layout_toLeftOf="@id/languages_spinner"
-                android:text="Hello.py"
+                android:layout_toLeftOf="@id/save_imag"
+                android:text="welcome to codelabx"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
                 android:layout_toRightOf="@+id/logo"
                 android:layout_centerVertical="true"
                 android:textStyle="bold"
                 android:ellipsize="end"/>
-            <Spinner
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_toLeftOf="@+id/run_icon"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:id="@+id/languages_spinner"
-                android:background="@drawable/languages_background"
-                android:foregroundGravity="center"
-                android:spinnerMode="dropdown"
-                android:popupBackground="@drawable/languages_background"
-                android:paddingTop="2dp"
-                android:paddingBottom="5dp"
+                android:src="@drawable/save"
+                android:id="@+id/save_imag"
                 />
 
             <ImageView

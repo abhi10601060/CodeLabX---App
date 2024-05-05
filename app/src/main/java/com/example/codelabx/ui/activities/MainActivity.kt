@@ -14,7 +14,6 @@ import android.provider.Settings
 import android.util.Log
 import android.view.Gravity
 import android.view.View
-import android.view.View.OnClickListener
 import android.view.Window
 import android.widget.*
 import androidx.annotation.RequiresApi
@@ -30,20 +29,18 @@ import com.example.codelabx.BuildConfig
 import com.example.codelabx.R
 import com.example.codelabx.adapters.FilesAdapter
 import com.example.codelabx.models.UserEvent
-import com.example.codelabx.network.WebSocketClient
 import com.example.codelabx.repos.MainRepo
 import com.example.codelabx.utility.SharedPref
 import com.example.codelabx.viewmodels.MainViewModel
 import com.example.codelabx.viewmodels.MainViewModelFactory
 import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
 class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
 
     lateinit var editor : EditText
 
-    lateinit var spinner : Spinner
+    lateinit var saveBtn : ImageView
     lateinit var codeEditor : EditText
     lateinit var filesRV : RecyclerView
     lateinit var curDirName : TextView
@@ -96,14 +93,22 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
             viewModel.saveFile(activeFile , editor.text.toString())
             val userEvent = createUserEvent()
             viewModel.writeMessageToConn(userEvent)
-            // TODO: Pass userEvent to the websocket connection and save text to file
+        })
+
+        saveBtn.setOnClickListener(View.OnClickListener {
+            viewModel.saveFile(activeFile , editor.text.toString())
         })
     }
 
     private fun createUserEvent(): UserEvent {
         var userName = "null"
         userName = SharedPref.getAuthDbInstance(this).getString(SharedPref.USER_KEY , "null").toString()
-        val selectedLanguage = spinner.selectedItem.toString()
+        val fileExtension = activeFile.extension
+        var selectedLanguage = "default"
+        when (fileExtension){
+            "py" -> selectedLanguage = "python"
+            "java" -> selectedLanguage = "java"
+        }
         val code = codeEditor.text.toString()
         Log.d(TAG, "createUserEvent: username : $userName, lang : $selectedLanguage, code : $code")
 
@@ -226,7 +231,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         editor = findViewById(R.id.code_editor)
         runBtn = findViewById(R.id.run_icon)
 
-        spinner = findViewById(R.id.languages_spinner)
+        saveBtn = findViewById(R.id.save_imag)
         codeEditor = findViewById(R.id.code_editor)
         filesRV = findViewById(R.id.files_recycler_view)
         curDirName = findViewById(R.id.cur_working_dir)
@@ -241,13 +246,6 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         stdoutNav = findViewById(R.id.stdout_drawer)
         stdout = findViewById(R.id.stdout_textview)
 
-        setSpinner()
-    }
-
-    private fun setSpinner() {
-        val adapter = ArrayAdapter.createFromResource(this, R.array.languages, android.R.layout.simple_spinner_item)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = adapter
     }
 
     /*                                  Permission Handling                                                                   */
