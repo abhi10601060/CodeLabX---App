@@ -62,6 +62,8 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
     lateinit var filesAdapter: FilesAdapter
     private  val TAG = "ABHI"
 
+    private lateinit var activeFile : File
+
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,6 +93,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         })
 
         runBtn.setOnClickListener(View.OnClickListener {
+            viewModel.saveFile(activeFile , editor.text.toString())
             val userEvent = createUserEvent()
             viewModel.writeMessageToConn(userEvent)
             // TODO: Pass userEvent to the websocket connection and save text to file
@@ -314,6 +317,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
     }
 
     override fun fileClicked(file: File) {
+        activeFile = file
         val data = viewModel.readFile(file)
         openedFileName.text = file.name
         editor.setText(data)

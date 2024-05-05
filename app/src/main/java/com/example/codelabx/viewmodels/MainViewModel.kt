@@ -17,7 +17,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import okhttp3.WebSocket
+import java.io.BufferedWriter
 import java.io.File
+import java.io.FileWriter
+import java.lang.Exception
 import java.lang.StringBuilder
 import java.util.*
 import javax.inject.Inject
@@ -141,5 +144,21 @@ class MainViewModel constructor(private val repo : MainRepo) : ViewModel(){
             return data.toString()
         }
         return "No Readable Data Found!!!"
+    }
+
+    fun saveFile(file : File , code : String ){
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val fileWriter  = FileWriter(file)
+                val bw = BufferedWriter(fileWriter)
+                bw.write("")
+                bw.write(code)
+                bw.close()
+                Log.d("ABHI", "saveFile: File saved successfully")
+            }
+            catch (ex: Exception){
+                Log.d("ABHI", "saveFile: cant write exception : ${ex.message}")
+            }
+        }
     }
 }
