@@ -27,6 +27,9 @@ class MainViewModel constructor(private val repo : MainRepo) : ViewModel(){
     val stdout : LiveData<String>
     get() = repo.stdout
 
+    val connFailure : LiveData<Int>
+        get() = repo.connFailure
+
     fun setWebSocketConn(){
         repo.setWebSocketConn()
     }

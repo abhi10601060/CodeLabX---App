@@ -16,9 +16,13 @@ object MainRepo  : WebSocketListener() {
 
      private var webSocket: WebSocket? = null
 
-     private var stdoutLiveData = MutableLiveData<String>("initial")
+     private var stdoutLiveData = MutableLiveData<String>()
      val stdout : LiveData<String>
         get() = stdoutLiveData
+
+    private var connFailureLivedata = MutableLiveData<Int>()
+    val connFailure : LiveData<Int>
+        get() = connFailureLivedata
 
     fun setWebSocketConn(){
         if (webSocket != null){
@@ -36,13 +40,14 @@ object MainRepo  : WebSocketListener() {
 
     override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
         super.onClosed(webSocket, code, reason)
-        Log.d("ABHI", "onMessage: $reason")
+        Log.d("ABHI", "onClosed with code : $code and message : $reason")
         closeWebsocketConn()
     }
 
     override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
         super.onFailure(webSocket, t, response)
-        Log.d("ABHI", "onFailure: called")
+        Log.d("ABHI", "onFailure: called with code ${response?.code} and message : ${response?.message}")
+        connFailureLivedata.postValue(response?.code)
 //        closeWebsocketConn()
 //        setWebSocketConn()
     }
@@ -57,7 +62,6 @@ object MainRepo  : WebSocketListener() {
     override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
         super.onMessage(webSocket, bytes)
         Log.d("ABHI", "onMessage: $bytes")
-//        this.stdoutLiveData.value = bytes.toString()
     }
 
     override fun onOpen(webSocket: WebSocket, response: Response) {

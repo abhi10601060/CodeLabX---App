@@ -14,6 +14,7 @@ import android.provider.Settings
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.Window
 import android.widget.*
 import androidx.annotation.RequiresApi
@@ -70,10 +71,10 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         checkStoragePermission()
         createViewModel()
         observeStdout()
+        observeConnFailure()
         setupFiles()
         setOnclicks()
     }
-
     private fun setOnclicks() {
         createFile.setOnClickListener(View.OnClickListener {
             Log.d(TAG, "onCreate: clicked")
@@ -115,6 +116,27 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
                 stdout.text = it
             }
         })
+    }
+
+    private fun observeConnFailure() {
+        viewModel.connFailure.observe(this, Observer{
+            if (it != null){
+                showConnectionLostAlert()
+            }
+        })
+    }
+
+    private fun showConnectionLostAlert() {
+        AlertDialog.Builder(this)
+            .setCancelable(false)
+            .setPositiveButton("Retry", DialogInterface.OnClickListener { dialogInterface, i ->
+                viewModel.setWebSocketConn()
+                dialogInterface.dismiss()
+            })
+            .setNegativeButton("cancel" , DialogInterface.OnClickListener { dialogInterface, i ->  dialogInterface.dismiss()})
+            .setTitle("Connectivity Error")
+            .setMessage("Connection lost to the server...")
+            .show()
     }
 
     private fun setupFiles() {
