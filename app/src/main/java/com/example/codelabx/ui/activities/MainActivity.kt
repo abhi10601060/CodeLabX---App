@@ -28,8 +28,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.codelabx.BuildConfig
 import com.example.codelabx.R
 import com.example.codelabx.adapters.FilesAdapter
+import com.example.codelabx.models.UserEvent
 import com.example.codelabx.network.WebSocketClient
 import com.example.codelabx.repos.MainRepo
+import com.example.codelabx.utility.SharedPref
 import com.example.codelabx.viewmodels.MainViewModel
 import com.example.codelabx.viewmodels.MainViewModelFactory
 import com.google.android.material.navigation.NavigationView
@@ -45,6 +47,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
     lateinit var filesRV : RecyclerView
     lateinit var curDirName : TextView
     lateinit var openedFileName : TextView
+    lateinit var runBtn : ImageView
 
     lateinit var createFile : ImageView
     lateinit var createFolder : ImageView
@@ -85,6 +88,22 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
             viewModel.back()
             setupFiles()
         })
+
+        runBtn.setOnClickListener(View.OnClickListener {
+            viewModel.setWebSocketConn()
+            val userEvent = createUserEvent()
+            // TODO: Pass userEvent to the websocket connection and save text to file
+        })
+    }
+
+    private fun createUserEvent(): UserEvent {
+        var userName = "null"
+        userName = SharedPref.getAuthDbInstance(this).getString(SharedPref.USER_KEY , "null").toString()
+        val selectedLanguage = spinner.selectedItem.toString()
+        val code = codeEditor.text.toString()
+        Log.d(TAG, "createUserEvent: username : $userName, lang : $selectedLanguage, code : $code")
+
+        return UserEvent(userName, selectedLanguage, code)
     }
 
     private fun observeStdout(){
@@ -173,15 +192,14 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
     }
 
     private fun createViewModel() {
-        val repo = MainRepo()
-        repo.setWebSocket(WebSocketClient.getWebSocketConn(repo))
-        viewModel = ViewModelProvider(this , MainViewModelFactory(repo)).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this , MainViewModelFactory(MainRepo)).get(MainViewModel::class.java)
     }
 
     /*                                  View Creation                                                                    */
     private fun createView() {
 
         editor = findViewById(R.id.code_editor)
+        runBtn = findViewById(R.id.run_icon)
 
         spinner = findViewById(R.id.languages_spinner)
         codeEditor = findViewById(R.id.code_editor)

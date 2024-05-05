@@ -10,6 +10,9 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import okhttp3.WebSocket
 import java.io.File
 import java.lang.StringBuilder
@@ -23,6 +26,10 @@ class MainViewModel constructor(private val repo : MainRepo) : ViewModel(){
     /* WebSocket Handling */
     val stdout : LiveData<String>
     get() = repo.stdout
+
+    fun setWebSocketConn(){
+        repo.setWebSocketConn()
+    }
 
     /* File Handling */
 

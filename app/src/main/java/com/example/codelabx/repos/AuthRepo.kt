@@ -7,6 +7,7 @@ import com.example.codelabx.models.AuthResponse
 import com.example.codelabx.models.UserDetails
 import com.example.codelabx.network.AuthService
 import com.example.codelabx.network.Resource
+import com.example.codelabx.utility.SharedPref
 import retrofit2.Response
 
 class AuthRepo(private val authService: AuthService , private val sharedPreferences: SharedPreferences){
@@ -31,7 +32,7 @@ class AuthRepo(private val authService: AuthService , private val sharedPreferen
                 if (response.body()!=null){
                     val token = response.body()!!.token
                     val editor = sharedPreferences.edit()
-                    editor.putString("token" , token)
+                    editor.putString(SharedPref.TOKEN_KEY , token)
                     editor.apply()
                     return Resource.Success<AuthResponse>(response.body())
                 }
@@ -39,10 +40,10 @@ class AuthRepo(private val authService: AuthService , private val sharedPreferen
         return  Resource.Error<AuthResponse>(response.message())
     }
     fun saveUser(userName : String){
-        sharedPreferences.edit().putString("user", userName).apply()
+        sharedPreferences.edit().putString(SharedPref.USER_KEY, userName).apply()
     }
     fun isUserLoggedIn() : Boolean{
-        var userName: String? = sharedPreferences.getString("user" , null) ?: return false
+        var userName: String? = sharedPreferences.getString(SharedPref.USER_KEY , null) ?: return false
         return true
     }
 }
