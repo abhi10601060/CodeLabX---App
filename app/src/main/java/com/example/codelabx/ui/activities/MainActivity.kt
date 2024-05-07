@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.Settings
+import android.text.Editable
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -34,6 +35,7 @@ import com.example.codelabx.utility.SharedPref
 import com.example.codelabx.viewmodels.MainViewModel
 import com.example.codelabx.viewmodels.MainViewModelFactory
 import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.file_layout.file_name
 import java.io.File
 
 class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
@@ -71,10 +73,29 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         createViewModel()
         setupFiles()
         setOnclicks()
+        observeActiveFile()
         observeStdout()
         observeConnFailure()
 
     }
+
+    private fun observeActiveFile() {
+        viewModel.activeFile.observe(this , Observer{activeFilePath ->
+            if (activeFilePath.equals("null")){
+                runBtn.visibility = View.INVISIBLE
+                saveBtn.visibility = View.INVISIBLE
+                openedFileName.text = "Welcome to codelabx"
+                editor.setText("")
+                editor.hint = resources.getString(R.string.createFileHint)
+            }
+            else{
+                runBtn.visibility = View.VISIBLE
+                saveBtn.visibility = View.VISIBLE
+                editor.hint = "</> Start coding here..."
+            }
+        })
+    }
+
     private fun setOnclicks() {
         createFile.setOnClickListener(View.OnClickListener {
             Log.d(TAG, "onCreate: clicked")

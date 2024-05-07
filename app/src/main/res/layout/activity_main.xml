@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/opened_file_title"
                 android:layout_toLeftOf="@id/save_imag"
-                android:text="welcome to codelabx"
+                android:text="Welcome to codelabx"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:layout_marginLeft="5dp"

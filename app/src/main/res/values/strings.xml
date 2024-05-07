@@ -6,4 +6,6 @@
         <item>java</item>
 <!--        <item>cpp</item>-->
     </string-array>
+
+    <string name="createFileHint" >&#128193; please create or select a file first to start coding...</string>
 </resources>

@@ -54,6 +54,10 @@ class MainViewModel constructor(private val repo : MainRepo) : ViewModel(){
     val files : LiveData<List<File>>
     get() = filesLivedata
 
+    private val activeFileLivedata = MutableLiveData<String>("null")
+    val activeFile : LiveData<String>
+        get() = activeFileLivedata
+
     fun getAllFilesFromCurDirectory(){
         val currFile = File(currDirPath)
         val fileList = getAllCodeLabFilesFolders(currFile)
@@ -133,6 +137,7 @@ class MainViewModel constructor(private val repo : MainRepo) : ViewModel(){
 
     fun readFile(file : File) : String{
         if (file.exists()){
+            activeFileLivedata.postValue(file.absolutePath)
             var data : StringBuilder = StringBuilder()
             val sc : Scanner = Scanner(file)
 
@@ -164,6 +169,7 @@ class MainViewModel constructor(private val repo : MainRepo) : ViewModel(){
 
     fun deleteFile(file : File){
         try{
+            if (file.absolutePath.equals(activeFile.value)) activeFileLivedata.postValue("null")
             file.delete()
             getAllFilesFromCurDirectory()
             getAllCodeLabFilesFolders(file.parentFile)
