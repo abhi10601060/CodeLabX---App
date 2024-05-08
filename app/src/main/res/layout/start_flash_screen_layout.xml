@@ -11,9 +11,10 @@
         android:layout_centerInParent="true">
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="@color/codelabx_theme"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@color/toolbar_color"
+            android:src="@drawable/clx_app_logo"
             android:id="@+id/flsh_logo"
             android:layout_centerHorizontal="true"/>
 
@@ -24,7 +25,6 @@
             android:textSize="40sp"
             android:layout_below="@id/flsh_logo"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
             android:textStyle="bold"
             android:textColor="@color/btn_color"
             android:id="@+id/flash_name"/>

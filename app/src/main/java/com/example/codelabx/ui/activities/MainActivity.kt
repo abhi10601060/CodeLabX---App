@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
 
         logo.setOnClickListener(View.OnClickListener {
             val rotateAnim = RotateAnimation(0f , 358f , Animation.RELATIVE_TO_SELF , 0.5f , Animation.RELATIVE_TO_SELF , 0.5f)
-            rotateAnim.duration = 700L
+            rotateAnim.duration = 400L
             rotateAnim.interpolator = LinearInterpolator()
             logo.startAnimation(rotateAnim)
             CoroutineScope(Dispatchers.Main).launch {

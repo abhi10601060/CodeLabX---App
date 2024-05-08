@@ -22,8 +22,9 @@
 
             <ImageView
                 android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@color/purple_200"
+                android:layout_height="60dp"
+                android:background="@color/toolbar_color"
+                android:src="@drawable/clx_app_logo"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_centerVertical="true"
