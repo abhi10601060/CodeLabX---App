@@ -10,12 +10,16 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
 import android.provider.Settings
 import android.text.Editable
 import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.Window
+import android.view.animation.Animation
+import android.view.animation.LinearInterpolator
+import android.view.animation.RotateAnimation
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -36,6 +40,12 @@ import com.example.codelabx.viewmodels.MainViewModel
 import com.example.codelabx.viewmodels.MainViewModelFactory
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.file_layout.file_name
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.io.File
 
 class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
@@ -56,6 +66,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
     lateinit var stdoutNav : NavigationView
     lateinit var drawer : DrawerLayout
     lateinit var stdout : TextView
+    lateinit var logo : ImageView
 
     lateinit var viewModel: MainViewModel
     lateinit var filesAdapter: FilesAdapter
@@ -119,6 +130,17 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
 
         saveBtn.setOnClickListener(View.OnClickListener {
             viewModel.saveFile(activeFile , editor.text.toString())
+        })
+
+        logo.setOnClickListener(View.OnClickListener {
+            val rotateAnim = RotateAnimation(0f , 358f , Animation.RELATIVE_TO_SELF , 0.5f , Animation.RELATIVE_TO_SELF , 0.5f)
+            rotateAnim.duration = 700L
+            rotateAnim.interpolator = LinearInterpolator()
+            logo.startAnimation(rotateAnim)
+            CoroutineScope(Dispatchers.Main).launch {
+                delay(200)
+                drawer.openDrawer(filesNav)
+            }
         })
     }
 
@@ -267,6 +289,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         drawer = findViewById(R.id.main_drawer)
         stdoutNav = findViewById(R.id.stdout_drawer)
         stdout = findViewById(R.id.stdout_textview)
+        logo = findViewById(R.id.logo)
 
     }
 
