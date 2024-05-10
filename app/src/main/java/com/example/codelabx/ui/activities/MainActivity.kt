@@ -1,6 +1,7 @@
 package com.example.codelabx.ui.activities
 
 import android.Manifest
+import android.app.Activity
 import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
@@ -10,9 +11,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
-import android.os.Handler
 import android.provider.Settings
-import android.text.Editable
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -20,12 +19,14 @@ import android.view.Window
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,11 +40,8 @@ import com.example.codelabx.utility.SharedPref
 import com.example.codelabx.viewmodels.MainViewModel
 import com.example.codelabx.viewmodels.MainViewModelFactory
 import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.file_layout.file_name
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
@@ -87,6 +85,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         observeActiveFile()
         observeStdout()
         observeConnFailure()
+        observeDrawerState()
 
     }
 
@@ -178,6 +177,25 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         })
     }
 
+    private fun observeDrawerState() {
+        drawer.setDrawerListener(object : DrawerListener{
+            override fun onDrawerSlide(view : View, p1: Float) {
+                hideKeyBoard(view)
+                editor.clearFocus()
+            }
+
+            override fun onDrawerOpened(view: View) {}
+
+            override fun onDrawerClosed(p0: View) {}
+
+            override fun onDrawerStateChanged(p0: Int) {}
+        })
+    }
+
+    private fun hideKeyBoard(view : View){
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken , 0)
+    }
     private fun showConnectionLostAlert() {
         AlertDialog.Builder(this)
             .setCancelable(false)
