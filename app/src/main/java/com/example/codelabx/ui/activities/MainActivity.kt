@@ -95,12 +95,18 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
                 runBtn.visibility = View.INVISIBLE
                 saveBtn.visibility = View.INVISIBLE
                 openedFileName.text = "Welcome to codelabx"
+                editor.isEnabled = false
+                editor.setPadding(10 ,50 , 10 , 0)
                 editor.setText("")
+                editor.gravity = Gravity.CENTER_HORIZONTAL
                 editor.hint = resources.getString(R.string.createFileHint)
             }
             else{
                 runBtn.visibility = View.VISIBLE
                 saveBtn.visibility = View.VISIBLE
+                editor.isEnabled = true
+                editor.setPadding(20 ,20 , 0 , 0)
+                editor.gravity = Gravity.NO_GRAVITY
                 editor.hint = "</> Start coding here..."
             }
         })
