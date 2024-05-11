@@ -40,10 +40,6 @@ import com.example.codelabx.utility.SharedPref
 import com.example.codelabx.viewmodels.MainViewModel
 import com.example.codelabx.viewmodels.MainViewModelFactory
 import com.google.android.material.navigation.NavigationView
-import com.itsaky.androidide.treesitter.TSLanguage
-import com.itsaky.androidide.treesitter.python.TSLanguagePython
-import io.github.rosemoe.sora.editor.ts.TsLanguage
-import io.github.rosemoe.sora.editor.ts.TsLanguageSpec
 import io.github.rosemoe.sora.langs.java.JavaLanguage
 import io.github.rosemoe.sora.widget.CodeEditor
 import io.github.rosemoe.sora.widget.schemes.EditorColorScheme
