@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-android-extensions'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
 }
@@ -26,11 +25,15 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+//        coreLibraryDesugaringEnabled = true
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
+    }
+    buildFeatures{
+        viewBinding = true
     }
 }
 
@@ -87,6 +90,15 @@ dependencies {
 
     // Web-socket
     implementation "com.squareup.okhttp3:okhttp:4.10.0"
+
+    //sora-editor
+//    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
+    implementation(platform("io.github.Rosemoe.sora-editor:bom:0.23.4"))
+    implementation 'io.github.Rosemoe.sora-editor:editor'
+//    implementation 'io.github.Rosemoe.sora-editor:language-textmate'
+    implementation 'io.github.Rosemoe.sora-editor:language-java'
+    implementation 'io.github.Rosemoe.sora-editor:language-treesitter'
+    implementation 'com.itsaky.androidide.treesitter:tree-sitter-python:4.3.1'
 }
 
 kapt {

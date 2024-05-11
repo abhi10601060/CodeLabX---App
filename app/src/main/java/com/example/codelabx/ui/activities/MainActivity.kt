@@ -40,6 +40,13 @@ import com.example.codelabx.utility.SharedPref
 import com.example.codelabx.viewmodels.MainViewModel
 import com.example.codelabx.viewmodels.MainViewModelFactory
 import com.google.android.material.navigation.NavigationView
+import com.itsaky.androidide.treesitter.TSLanguage
+import com.itsaky.androidide.treesitter.python.TSLanguagePython
+import io.github.rosemoe.sora.editor.ts.TsLanguage
+import io.github.rosemoe.sora.editor.ts.TsLanguageSpec
+import io.github.rosemoe.sora.langs.java.JavaLanguage
+import io.github.rosemoe.sora.widget.CodeEditor
+import io.github.rosemoe.sora.widget.schemes.EditorColorScheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -48,10 +55,10 @@ import java.io.File
 
 class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
 
-    lateinit var editor : EditText
+    lateinit var editor : CodeEditor
+    lateinit var createFileText : TextView
 
     lateinit var saveBtn : ImageView
-    lateinit var codeEditor : EditText
     lateinit var filesRV : RecyclerView
     lateinit var curDirName : TextView
     lateinit var openedFileName : TextView
@@ -80,6 +87,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         createView()
         checkStoragePermission()
         createViewModel()
+        setUpEditor()
         setupFiles()
         setOnclicks()
         observeActiveFile()
@@ -89,25 +97,44 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        editor.release()
+    }
+
+    private fun setUpEditor() {
+        val scheme = editor.colorScheme
+        scheme.setColor(EditorColorScheme.WHOLE_BACKGROUND , resources.getColor(R.color.editor_color))
+        scheme.setColor(EditorColorScheme.LINE_NUMBER_BACKGROUND , resources.getColor(R.color.editor_color_dark))
+        scheme.setColor(EditorColorScheme.LINE_NUMBER , resources.getColor(R.color.light_grey))
+        scheme.setColor(EditorColorScheme.LINE_NUMBER_CURRENT , resources.getColor(R.color.codelabx_theme))
+        scheme.setColor(EditorColorScheme.LINE_DIVIDER , resources.getColor(R.color.editor_color))
+        scheme.setColor(EditorColorScheme.TEXT_NORMAL , resources.getColor(R.color.white))
+    }
+
     private fun observeActiveFile() {
         viewModel.activeFile.observe(this , Observer{activeFilePath ->
+            Log.d(TAG, "observeActiveFile: $activeFilePath")
             if (activeFilePath.equals("null")){
                 runBtn.visibility = View.INVISIBLE
                 saveBtn.visibility = View.INVISIBLE
                 openedFileName.text = "Welcome to codelabx"
-                editor.isEnabled = false
-                editor.setPadding(10 ,50 , 10 , 0)
-                editor.setText("")
-                editor.gravity = Gravity.CENTER_HORIZONTAL
-                editor.hint = resources.getString(R.string.createFileHint)
+                editor.visibility = View.GONE
+                createFileText.text = resources.getString(R.string.createFileHint)
+                createFileText.visibility = View.VISIBLE
             }
             else{
                 runBtn.visibility = View.VISIBLE
                 saveBtn.visibility = View.VISIBLE
+                editor.visibility = View.VISIBLE
+                createFileText.visibility = View.GONE
                 editor.isEnabled = true
-                editor.setPadding(20 ,20 , 0 , 0)
-                editor.gravity = Gravity.NO_GRAVITY
-                editor.hint = "</> Start coding here..."
+                if (activeFilePath.endsWith(".java")){
+                    editor.setEditorLanguage(JavaLanguage())
+                }
+                else{
+                   editor.setEditorLanguage(null)
+                }
             }
         })
     }
@@ -158,7 +185,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
             "py" -> selectedLanguage = "python"
             "java" -> selectedLanguage = "java"
         }
-        val code = codeEditor.text.toString()
+        val code = editor.text.toString()
         Log.d(TAG, "createUserEvent: username : $userName, lang : $selectedLanguage, code : $code")
 
         return UserEvent(userName, selectedLanguage, code)
@@ -300,7 +327,6 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         runBtn = findViewById(R.id.run_icon)
 
         saveBtn = findViewById(R.id.save_imag)
-        codeEditor = findViewById(R.id.code_editor)
         filesRV = findViewById(R.id.files_recycler_view)
         curDirName = findViewById(R.id.cur_working_dir)
         openedFileName = findViewById(R.id.opened_file_title)
@@ -314,6 +340,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         stdoutNav = findViewById(R.id.stdout_drawer)
         stdout = findViewById(R.id.stdout_textview)
         logo = findViewById(R.id.logo)
+        createFileText = findViewById(R.id.create_file_text)
 
     }
 

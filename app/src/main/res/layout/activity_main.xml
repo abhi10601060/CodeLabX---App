@@ -66,14 +66,36 @@
 
         </RelativeLayout>
 
-        <EditText
+<!--        <EditText-->
+<!--            android:id="@+id/code_editor"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_below="@+id/toolbar"-->
+<!--            android:gravity="start"-->
+<!--            android:background="#212327"-->
+<!--            android:hint="//Code here" />-->
+
+        <io.github.rosemoe.sora.widget.CodeEditor
             android:id="@+id/code_editor"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/toolbar"
-            android:gravity="start"
+            app:text="Hello, world!"
+            app:textSize="18sp"
+            app:dividerMargin="3dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
             android:background="#212327"
-            android:hint="//Code here" />
+            android:gravity="center"
+            android:text="Hi code here"
+            android:id="@+id/create_file_text"
+            android:padding="20dp"
+            android:textSize="18sp"
+            />
 
     </RelativeLayout>
 
@@ -240,7 +262,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/navigation_view_line"
-                android:padding="10dp" />
+                android:padding="10dp"/>
 
         </RelativeLayout>
 
