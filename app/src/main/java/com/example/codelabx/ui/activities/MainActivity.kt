@@ -72,6 +72,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
     lateinit var viewModel: MainViewModel
     lateinit var filesAdapter: FilesAdapter
     private  val TAG = "ABHI"
+    var runClicked = false
 
     private lateinit var activeFile : File
 
@@ -95,6 +96,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
 
     override fun onDestroy() {
         super.onDestroy()
+        viewModel.closeWebsocketConn()
         editor.release()
     }
 
@@ -151,9 +153,10 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         })
 
         runBtn.setOnClickListener(View.OnClickListener {
+            runClicked=true
             viewModel.saveFile(activeFile , editor.text.toString())
             val userEvent = createUserEvent()
-            viewModel.writeMessageToConn(userEvent)
+            viewModel.writeMessageToConn(userEvent , this)
         })
 
         saveBtn.setOnClickListener(View.OnClickListener {
@@ -200,9 +203,13 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
 
     private fun observeConnFailure() {
         viewModel.connFailure.observe(this, Observer{
-            if (it != null){
+            if (it != null && it == 0 && runClicked){
+                showSessionTimeOutDialog()
+            }
+            else if (it != null && it>300 && runClicked){
                 showConnectionLostAlert()
             }
+            runClicked=false
         })
     }
 
@@ -229,13 +236,37 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         AlertDialog.Builder(this)
             .setCancelable(false)
             .setPositiveButton("Retry", DialogInterface.OnClickListener { dialogInterface, i ->
-                viewModel.writeMessageToConn(createUserEvent())
+                viewModel.writeMessageToConn(createUserEvent() , this)
                 dialogInterface.dismiss()
             })
             .setNegativeButton("cancel" , DialogInterface.OnClickListener { dialogInterface, i ->  dialogInterface.dismiss()})
             .setTitle("Connectivity Error")
             .setMessage("Connection lost to the server...")
             .show()
+    }
+
+    private fun showSessionTimeOutDialog() {
+        AlertDialog.Builder(this)
+            .setCancelable(false)
+            .setPositiveButton("OK", DialogInterface.OnClickListener { dialogInterface, i ->
+                logout()
+                openLoginScreen()
+            })
+            .setTitle("Session TimeOut!")
+            .setMessage("Your current session is over, Please login again to continue...")
+            .show()
+    }
+
+    private fun openLoginScreen() {
+        val intent = Intent(this, AuthenticationActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+    }
+
+    private fun logout() {
+        val db = SharedPref.getAuthDbInstance(this)
+        db.edit().remove(SharedPref.USER_KEY).apply()
+        db.edit().remove(SharedPref.TOKEN_KEY).apply()
     }
 
     private fun setupFiles() {

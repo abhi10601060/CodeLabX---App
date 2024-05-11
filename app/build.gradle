@@ -99,6 +99,9 @@ dependencies {
     implementation 'io.github.Rosemoe.sora-editor:language-java'
     implementation 'io.github.Rosemoe.sora-editor:language-treesitter'
     implementation 'com.itsaky.androidide.treesitter:tree-sitter-python:4.3.1'
+
+    //Spinner Kit
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 }
 
 kapt {

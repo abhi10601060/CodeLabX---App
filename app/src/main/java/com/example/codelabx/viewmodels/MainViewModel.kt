@@ -1,5 +1,6 @@
 package com.example.codelabx.viewmodels
 
+import android.content.Context
 import android.os.Environment
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -36,12 +37,16 @@ class MainViewModel constructor(private val repo : MainRepo) : ViewModel(){
     val connFailure : LiveData<Int>
         get() = repo.connFailure
 
-    fun setWebSocketConn(){
-        repo.setWebSocketConn()
+    fun setWebSocketConn(context: Context){
+        repo.setWebSocketConn(context)
     }
 
-    fun writeMessageToConn(userEvent: UserEvent){
-        repo.writeMessageToConn(userEvent)
+    fun writeMessageToConn(userEvent: UserEvent , context: Context){
+        repo.writeMessageToConn(userEvent, context)
+    }
+
+    fun closeWebsocketConn(){
+        repo.closeWebsocketConn()
     }
 
     /* File Handling */

@@ -1,5 +1,6 @@
 package com.example.codelabx.repos
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -26,12 +27,12 @@ object MainRepo  : WebSocketListener() {
     val connFailure : LiveData<Int>
         get() = connFailureLivedata
 
-    fun setWebSocketConn(){
+    fun setWebSocketConn(context : Context){
         if (webSocket != null){
             closeWebsocketConn()
             Log.d("ABHI", "setWebSocketConn: closed prev web socket")
         }
-        webSocket = WebSocketClient.getWebSocketConn(this)
+        webSocket = WebSocketClient.getWebSocketConn(this , context)
     }
 
     fun closeWebsocketConn(){
@@ -40,12 +41,12 @@ object MainRepo  : WebSocketListener() {
         webSocket = null
     }
 
-    fun writeMessageToConn(userEvent: UserEvent){
+    fun writeMessageToConn(userEvent: UserEvent, context : Context){
         val gson = Gson()
         val res = webSocket?.send(gson.toJson(userEvent))
         if (res==null || !res) {
-            setWebSocketConn()
-            writeMessageToConn(userEvent)
+            setWebSocketConn(context)
+            writeMessageToConn(userEvent , context)
         }
     }
 
@@ -58,9 +59,12 @@ object MainRepo  : WebSocketListener() {
     override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
         super.onFailure(webSocket, t, response)
         Log.d("ABHI", "onFailure: called with code ${response?.code} and message : ${response?.message}")
-        connFailureLivedata.postValue(response?.code)
-//        closeWebsocketConn()
-//        setWebSocketConn()
+        if (response?.message.equals("Unauthorized" , true)){
+            connFailureLivedata.postValue(0)
+        }
+        else{
+            connFailureLivedata.postValue(response?.code)
+        }
     }
 
     override fun onMessage(webSocket: WebSocket, text: String) {
@@ -77,6 +81,6 @@ object MainRepo  : WebSocketListener() {
 
     override fun onOpen(webSocket: WebSocket, response: Response) {
         super.onOpen(webSocket, response)
-        Log.d("ABHI", "onMessage: ${response.message}")
+        Log.d("ABHI", "onOpen: ${response.message}")
     }
 }
