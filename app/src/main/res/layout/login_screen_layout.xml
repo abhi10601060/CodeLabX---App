@@ -4,30 +4,33 @@
     android:layout_height="match_parent"
     android:background="@color/toolbar_color">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/login_logo_parent"
-        android:orientation="horizontal"
-        android:gravity="center"
         android:layout_marginTop="30dp">
 
         <ImageView
-            android:layout_width="60dp"
+            android:layout_width="80dp"
             android:layout_height="60dp"
             android:id="@+id/login_logo"
-            android:background="@color/codelabx_theme"/>
+            android:src="@drawable/clx_app_logo"
+            android:layout_centerHorizontal="true"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CODELABX"
+            android:layout_below="@+id/login_logo"
+            android:text="CodeLabX"
+            android:textStyle="bold"
+            android:letterSpacing="0.02"
             android:textSize="40sp"
             android:layout_marginLeft="10dp"
             android:id="@+id/login_logo_text"
-            android:textColor="@color/white"/>
+            android:textColor="@color/btn_color"
+            android:layout_centerHorizontal="true"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -82,7 +85,7 @@
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="32dp"
+            android:layout_height="42dp"
             android:layout_below="@id/login_text_email"
             android:layout_marginTop="8dp"
             android:paddingStart="10dp"
@@ -105,7 +108,7 @@
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="32dp"
+            android:layout_height="42dp"
             android:layout_below="@id/login_password"
             android:layout_marginTop="8dp"
             android:paddingStart="10dp"
@@ -125,7 +128,7 @@
             android:layout_marginTop="10dp"
             android:textSize="16dp"
             android:textStyle="bold"
-            android:textColor="@color/codelabx_theme"
+            android:textColor="@color/blue"
             android:id="@+id/login_forgot_text"/>
 
         <Button
@@ -161,7 +164,7 @@
                 android:text="Sign Up"
                 android:textStyle="bold"
                 android:textSize="15dp"
-                android:textColor="@color/codelabx_theme"
+                android:textColor="@color/blue"
                 android:id="@+id/login_signup_text"/>
 
         </LinearLayout>

@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
     lateinit var curDirName : TextView
     lateinit var openedFileName : TextView
     lateinit var runBtn : ImageView
+    lateinit var logoutBtn : ImageView
 
     lateinit var createFile : ImageView
     lateinit var createFolder : ImageView
@@ -176,6 +177,22 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
                 drawer.openDrawer(filesNav)
             }
         })
+
+        logoutBtn.setOnClickListener(View.OnClickListener {
+            showLogoutDialog()
+        })
+    }
+
+    private fun showLogoutDialog() {
+        AlertDialog.Builder(this)
+            .setPositiveButton("Yes", DialogInterface.OnClickListener { dialogInterface, i ->
+                logout()
+                openLoginScreen()
+            })
+            .setNegativeButton("No" , DialogInterface.OnClickListener { dialogInterface, i ->  dialogInterface.dismiss()})
+            .setTitle("Session Logout")
+            .setMessage("Are you sure you want to logout?")
+            .show()
     }
 
     private fun createUserEvent(): UserEvent {
@@ -269,6 +286,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
     }
 
     private fun logout() {
+        viewModel.closeWebsocketConn()
         val db = SharedPref.getAuthDbInstance(this)
         db.edit().remove(SharedPref.USER_KEY).apply()
         db.edit().remove(SharedPref.TOKEN_KEY).apply()
@@ -374,6 +392,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         logo = findViewById(R.id.logo)
         createFileText = findViewById(R.id.create_file_text)
         resProgress = findViewById(R.id.res_loading_progress_bar)
+        logoutBtn = findViewById(R.id.logout_image)
 
     }
 

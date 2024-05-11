@@ -12,6 +12,8 @@
     <color name="editor_color_light">#3D4045</color>
     <color name="editor_color_dark">#1C1E20</color>
     <color name="codelabx_theme">#6C3BE0</color>
+    <color name="codelabx_theme_dark">#7033af</color>
     <color name="btn_color">#CED5DC</color>
     <color name="light_grey">#ABAEB1</color>
+    <color name="blue">#2C7EDA</color>
 </resources>
