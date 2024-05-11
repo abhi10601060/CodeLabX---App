@@ -39,6 +39,7 @@ import com.example.codelabx.repos.MainRepo
 import com.example.codelabx.utility.SharedPref
 import com.example.codelabx.viewmodels.MainViewModel
 import com.example.codelabx.viewmodels.MainViewModelFactory
+import com.github.ybq.android.spinkit.SpinKitView
 import com.google.android.material.navigation.NavigationView
 import io.github.rosemoe.sora.langs.java.JavaLanguage
 import io.github.rosemoe.sora.widget.CodeEditor
@@ -68,6 +69,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
     lateinit var drawer : DrawerLayout
     lateinit var stdout : TextView
     lateinit var logo : ImageView
+    lateinit var resProgress : SpinKitView
 
     lateinit var viewModel: MainViewModel
     lateinit var filesAdapter: FilesAdapter
@@ -156,6 +158,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
             runClicked=true
             viewModel.saveFile(activeFile , editor.text.toString())
             val userEvent = createUserEvent()
+            resProgress.visibility = View.VISIBLE
             viewModel.writeMessageToConn(userEvent , this)
         })
 
@@ -198,6 +201,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
                 drawer.openDrawer(Gravity.RIGHT)
                 stdout.text = it
             }
+            resProgress.visibility = View.GONE
         })
     }
 
@@ -210,6 +214,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
                 showConnectionLostAlert()
             }
             runClicked=false
+            resProgress.visibility = View.GONE
         })
     }
 
@@ -368,6 +373,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         stdout = findViewById(R.id.stdout_textview)
         logo = findViewById(R.id.logo)
         createFileText = findViewById(R.id.create_file_text)
+        resProgress = findViewById(R.id.res_loading_progress_bar)
 
     }
 

@@ -64,6 +64,22 @@
                 android:src="@mipmap/run_icon"
                 />
 
+            <com.github.ybq.android.spinkit.SpinKitView
+                android:layout_width="45dp"
+                android:layout_height="30dp"
+                android:padding="0dp"
+                android:layout_marginBottom="-5dp"
+                android:id="@+id/res_loading_progress_bar"
+                style="@style/SpinKitView.Large.ThreeBounce"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="10dp"
+                app:SpinKit_Color="@color/codelabx_theme"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                />
+
+
         </RelativeLayout>
 
 <!--        <EditText-->
@@ -262,7 +278,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/navigation_view_line"
-                android:padding="10dp"/>
+                android:padding="10dp" />
 
         </RelativeLayout>
 
