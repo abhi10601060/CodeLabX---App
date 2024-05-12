@@ -205,9 +205,11 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
             "java" -> selectedLanguage = "java"
         }
         val code = editor.text.toString()
-        Log.d(TAG, "createUserEvent: username : $userName, lang : $selectedLanguage, code : $code")
+        var fileName = openedFileName.text.toString()
+        val fileNameWithoutExt = fileName.substring(0 ,fileName.length-3)
+        Log.d(TAG, "createUserEvent: username : $userName, lang : $selectedLanguage, code : $code, fileName: $fileNameWithoutExt")
 
-        return UserEvent(userName, selectedLanguage, code)
+        return UserEvent(userName, selectedLanguage, code, fileNameWithoutExt)
     }
 
     private fun observeStdout(){
