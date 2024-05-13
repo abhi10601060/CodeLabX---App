@@ -232,6 +232,9 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
             else if (it != null && it>300 && runClicked){
                 showConnectionLostAlert()
             }
+            else{
+                showServerNotRespondingError()
+            }
             runClicked=false
             resProgress.visibility = View.GONE
         })
@@ -278,6 +281,15 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
             })
             .setTitle("Session TimeOut!")
             .setMessage("Your current session is over, Please login again to continue...")
+            .show()
+    }
+
+    private fun showServerNotRespondingError() {
+        AlertDialog.Builder(this)
+            .setCancelable(false)
+            .setNegativeButton("Ok" , DialogInterface.OnClickListener { dialogInterface, i ->  dialogInterface.dismiss()})
+            .setTitle("Server Not responding!")
+            .setMessage("Could not connect to server. Please try again later...")
             .show()
     }
 
