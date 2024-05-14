@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
     lateinit var stdout : TextView
     lateinit var logo : ImageView
     lateinit var resProgress : SpinKitView
+    lateinit var userName : TextView
 
     lateinit var viewModel: MainViewModel
     lateinit var filesAdapter: FilesAdapter
@@ -89,12 +90,17 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         createViewModel()
         setUpEditor()
         setupFiles()
+        setUpTexts()
         setOnclicks()
         observeActiveFile()
         observeStdout()
         observeConnFailure()
         observeDrawerState()
 
+    }
+
+    private fun setUpTexts() {
+        userName.text = SharedPref.getAuthDbInstance(this).getString(SharedPref.USER_KEY , "Guest")
     }
 
     override fun onDestroy() {
@@ -200,13 +206,18 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         userName = SharedPref.getAuthDbInstance(this).getString(SharedPref.USER_KEY , "null").toString()
         val fileExtension = activeFile.extension
         var selectedLanguage = "default"
+        var fileNameWithoutExt = "Main"
         when (fileExtension){
-            "py" -> selectedLanguage = "python"
-            "java" -> selectedLanguage = "java"
+            "py" -> {
+                selectedLanguage = "python"
+                fileNameWithoutExt = openedFileName.text.toString().substringBefore(".py")
+            }
+            "java" -> {
+                selectedLanguage = "java"
+                fileNameWithoutExt = openedFileName.text.toString().substringBefore(".java")
+            }
         }
         val code = editor.text.toString()
-        var fileName = openedFileName.text.toString()
-        val fileNameWithoutExt = fileName.substring(0 ,fileName.length-3)
         Log.d(TAG, "createUserEvent: username : $userName, lang : $selectedLanguage, code : $code, fileName: $fileNameWithoutExt")
 
         return UserEvent(userName, selectedLanguage, code, fileNameWithoutExt)
@@ -407,6 +418,7 @@ class MainActivity : AppCompatActivity() , FilesAdapter.CodeLabXFileOnClick{
         createFileText = findViewById(R.id.create_file_text)
         resProgress = findViewById(R.id.res_loading_progress_bar)
         logoutBtn = findViewById(R.id.logout_image)
+        userName = findViewById(R.id.profile_name)
 
     }
 
