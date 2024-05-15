@@ -7,7 +7,7 @@ object RetroInstance {
 
     fun getInstance() : Retrofit{
         return Retrofit.Builder()
-            .baseUrl("http://ec2-15-207-100-97.ap-south-1.compute.amazonaws.com:8010")
+            .baseUrl("http://ec2-13-232-1-253.ap-south-1.compute.amazonaws.com:8010")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

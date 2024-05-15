@@ -77,7 +77,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Email"
+            android:text="User Name"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:textSize="20dp"
@@ -90,7 +90,7 @@
             android:layout_marginTop="8dp"
             android:paddingStart="10dp"
             android:maxLines="1"
-            android:hint="Enter email here..."
+            android:hint="Enter user name here..."
             android:textColorHint="@color/btn_color"
             android:background="@drawable/custom_edittext_background"
             android:id="@+id/login_email_edt"/>

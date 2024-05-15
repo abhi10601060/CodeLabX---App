@@ -10,7 +10,7 @@ import okhttp3.WebSocketListener
 class WebSocketClient {
 
     companion object{
-        private val url = "ws://ec2-15-207-100-97.ap-south-1.compute.amazonaws.com:8010/handShake"
+        private val url = "ws://ec2-13-232-1-253.ap-south-1.compute.amazonaws.com:8010/handShake"
         private val okhttpClient = OkHttpClient()
 
         fun getWebSocketConn(webSocketListener: WebSocketListener, context: Context) : WebSocket{
